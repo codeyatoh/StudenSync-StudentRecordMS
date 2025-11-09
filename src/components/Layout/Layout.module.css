@@ -1,0 +1,65 @@
+/* Layout Styles - Mobile First */
+.layoutContainer {
+  min-height: 100vh;
+  width: 100%;
+  background: #f5f5f5;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
+.layoutMain {
+  transition: margin-left 0.3s ease;
+  margin-top: 64px;
+  width: 100%;
+  min-height: calc(100vh - 64px);
+}
+
+/* Mobile: No margin (sidebar is overlay) */
+.layoutMainExpanded {
+  margin-left: 0;
+}
+
+.layoutMainCollapsed {
+  margin-left: 0;
+}
+
+.layoutContent {
+  padding: 8px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+/* Tablet: Sidebar overlay when closed */
+@media (min-width: 768px) {
+.layoutMainExpanded {
+  margin-left: 256px;
+}
+
+.layoutMainCollapsed {
+  margin-left: 80px;
+}
+
+.layoutContent {
+  padding: 12px;
+    max-width: calc(100vw - 256px);
+  }
+}
+
+/* Desktop: More spacing with max-width constraint */
+@media (min-width: 1024px) {
+  .layoutContent {
+    padding: 16px;
+    max-width: calc(100vw - 256px - 32px); /* Account for sidebar and padding */
+  }
+
+  .layoutMainCollapsed .layoutContent {
+    max-width: calc(100vw - 80px - 32px); /* Account for collapsed sidebar */
+  }
+}
+
+/* Large Desktop: More padding */
+@media (min-width: 1440px) {
+  .layoutContent {
+    padding: 20px;
+  }
+}

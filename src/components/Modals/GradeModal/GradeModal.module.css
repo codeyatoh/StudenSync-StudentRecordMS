@@ -1,0 +1,290 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.modal {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  max-width: 1024px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.closeButton {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.closeButton:hover {
+  background: #f3f4f6;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+  color: #6b7280;
+}
+
+.content {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
+}
+
+.avatar {
+  width: 96px;
+  height: 96px;
+  background: linear-gradient(135deg, #000 0%, #4b5563 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.avatarIcon {
+  width: 48px;
+  height: 48px;
+  color: white;
+}
+
+.profileInfo {
+  flex: 1;
+}
+
+.studentName {
+  font-size: 32px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 8px 0;
+}
+
+.studentId {
+  color: #6b7280;
+  margin: 0 0 4px 0;
+}
+
+.courseName {
+  color: #6b7280;
+  margin: 0 0 8px 0;
+}
+
+.statusBadge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.statusPassed {
+  background: #10b981;
+}
+
+.statusFailed {
+  background: #ef4444;
+}
+
+.statusText {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.infoCard {
+  background: #f9fafb;
+  border-radius: 12px;
+  padding: 24px;
+  border: 1px solid #e5e7eb;
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.cardIcon {
+  width: 20px;
+  height: 20px;
+  color: #000;
+}
+
+.cardTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin: 0 0 16px 0;
+}
+
+.infoList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.infoItem {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+}
+
+.infoLabel {
+  color: #6b7280;
+}
+
+.infoValue {
+  color: #000;
+  font-weight: 500;
+}
+
+.infoValueMono {
+  color: #000;
+  font-weight: 500;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.gradeBreakdown {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.gradeItem {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gradeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.gradeLabel {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.gradeValue {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  font-family: 'JetBrains Mono', monospace;
+}
+
+.progressBar {
+  width: 100%;
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progressFill {
+  height: 100%;
+  background: #000;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.finalGradeCard {
+  background: linear-gradient(135deg, #000 0%, #4b5563 100%);
+  border-radius: 12px;
+  padding: 24px;
+  color: white;
+}
+
+.finalGradeCard .cardTitle {
+  color: white;
+  margin-bottom: 16px;
+}
+
+.finalGradeContent {
+  text-align: center;
+}
+
+.finalGradeValue {
+  font-size: 96px;
+  font-weight: 700;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 0 0 8px 0;
+}
+
+.averageText {
+  font-size: 14px;
+  opacity: 0.9;
+  margin: 0 0 16px 0;
+}
+
+.finalStatusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 9999px;
+  font-size: 14px;
+  font-weight: 500;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.finalStatusBadge .statusDot {
+  background: white;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+}

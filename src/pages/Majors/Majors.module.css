@@ -1,0 +1,437 @@
+/* Majors Page - Mobile First */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+  padding: 0;
+}
+
+@media (min-width: 768px) {
+  .container {
+    gap: 16px;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .header {
+    flex-direction: row;
+    align-items: center;
+  gap: 24px;
+  }
+}
+
+.titleSection {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.iconWrapper {
+  width: 48px;
+  height: 48px;
+  background: linear-gradient(135deg, #000 0%, #4b5563 100%);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  color: white;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 36px;
+  }
+}
+
+.addButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  white-space: nowrap;
+  width: 100%;
+  min-height: 44px;
+}
+
+@media (min-width: 480px) {
+  .addButton {
+    width: auto;
+  }
+}
+
+.buttonIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+@media (min-width: 768px) {
+  .card {
+  padding: 16px;
+  }
+}
+
+.searchContainer {
+  position: relative;
+  margin-bottom: 24px;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  color: #9ca3af;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 12px 16px 12px 48px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.searchInput::placeholder {
+  color: #9ca3af;
+}
+
+.searchInput:focus {
+  border-color: #000;
+}
+
+.error {
+  padding: 16px 24px;
+  background: #fef2f2;
+  color: #dc2626;
+  border-bottom: 1px solid #e5e7eb;
+  font-size: 14px;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 64px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.tableContainer {
+  overflow-x: auto;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+  position: relative;
+  max-width: 100%;
+}
+
+@media (max-width: 767px) {
+  .tableContainer {
+    border-radius: 8px;
+  }
+
+  .tableContainer::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  .tableContainer::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .tableContainer::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 3px;
+  }
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 700px; /* Ensure table doesn't get too cramped */
+}
+
+.tableHeaderRow {
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.tableHeader {
+  padding: 12px;
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .tableHeader {
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
+.tableRow {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.tableRow:hover {
+  background: #f9fafb;
+}
+
+.tableCell {
+  padding: 12px;
+  color: #374151;
+  font-size: 13px;
+  vertical-align: top;
+}
+
+@media (min-width: 768px) {
+  .tableCell {
+    padding: 16px;
+    font-size: 14px;
+  }
+}
+
+.tableCellMono {
+  font-family: 'SF Mono', 'Monaco', 'Inconsolata', 'Roboto Mono', monospace;
+  font-weight: 600;
+  color: #000;
+}
+
+.majorName {
+  font-weight: 600;
+  color: #000;
+}
+
+.description {
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.statusActive {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.statusInactive {
+  background: #fef2f2;
+  color: #dc2626;
+}
+
+.statusDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.actionButtons {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+@media (min-width: 768px) {
+  .actionButtons {
+  gap: 8px;
+  }
+}
+
+.actionButton {
+  padding: 6px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+  cursor: pointer;
+  min-width: 36px;
+  min-height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 768px) {
+  .actionButton {
+    padding: 8px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+}
+
+.actionButton:hover {
+  background: #f3f4f6;
+}
+
+.actionButtonDelete:hover {
+  background: #fef2f2;
+}
+
+.actionIcon {
+  width: 16px;
+  height: 16px;
+  color: #6b7280;
+}
+
+.actionIconDelete {
+  width: 16px;
+  height: 16px;
+  color: #dc2626;
+}
+
+.emptyState {
+  text-align: center;
+  padding: 64px 24px;
+  color: #6b7280;
+  font-size: 16px;
+}
+
+.emptyStateText {
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 16px;
+  }
+
+  .header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+
+  .titleSection {
+    gap: 12px;
+  }
+
+  .iconWrapper {
+    width: 40px;
+    height: 40px;
+  }
+
+  .icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+  }
+
+  .addButton {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .searchContainer {
+    margin-bottom: 16px;
+  }
+
+  .tableHeader,
+  .tableCell {
+    padding: 12px 16px;
+  }
+
+  .tableHeader {
+    font-size: 12px;
+  }
+
+  .tableCell {
+    font-size: 13px;
+  }
+
+  .actionButtons {
+    gap: 4px;
+  }
+
+  .actionButton {
+    width: 28px;
+    height: 28px;
+  }
+
+  .actionIcon {
+    width: 12px;
+    height: 12px;
+  }
+}

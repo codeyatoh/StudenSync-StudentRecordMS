@@ -1,0 +1,27 @@
+/* Button Styles */
+.btn {
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.btnPrimary {
+  background: #000;
+  color: white;
+}
+
+.btnPrimary:hover {
+  background: #1f2937;
+}
+
+.btnSecondary {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.btnSecondary:hover {
+  background: #e5e7eb;
+}

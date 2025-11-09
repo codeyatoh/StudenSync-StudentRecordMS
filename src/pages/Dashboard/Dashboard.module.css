@@ -1,0 +1,380 @@
+/* Dashboard Styles - Mobile First */
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+/* Desktop: Add max-width constraint */
+@media (min-width: 1024px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.subtitle {
+  color: #6b7280;
+  margin-top: 4px;
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  .container {
+    gap: 16px;
+  }
+
+  .title {
+    font-size: 32px;
+  }
+
+  .subtitle {
+    font-size: 16px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 36px;
+  }
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+}
+
+@media (min-width: 768px) {
+  .statsGrid {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+  }
+}
+
+.statCard {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  transition: box-shadow 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .statCard {
+    padding: 16px;
+  }
+}
+
+.statCard:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.statHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.statIcon {
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.statIconblue {
+  background: #dbeafe;
+  color: #2563eb;
+}
+
+.statIcongreen {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.statIconpurple {
+  background: #e9d5ff;
+  color: #7c3aed;
+}
+
+.statIconindigo {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+
+.statIconorange {
+  background: #fed7aa;
+  color: #ea580c;
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+}
+
+.statChange {
+  font-size: 14px;
+  font-weight: 500;
+  color: #059669;
+}
+
+.statValue {
+  font-size: 24px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 4px 0;
+  line-height: 1.2;
+}
+
+@media (min-width: 768px) {
+  .statValue {
+    font-size: 32px;
+  }
+}
+
+.statLabel {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.contentGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  width: 100%;
+}
+
+@media (min-width: 1024px) {
+  .contentGrid {
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 16px;
+  }
+}
+
+.activityCard,
+.quickActionsCard {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 12px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@media (min-width: 768px) {
+  .activityCard,
+  .quickActionsCard {
+  padding: 16px;
+  }
+}
+
+.cardTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #000;
+  margin: 0 0 16px 0;
+}
+
+@media (min-width: 768px) {
+  .cardTitle {
+    font-size: 20px;
+  }
+}
+
+.activityList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.activityItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.activityItem:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.activityDot {
+  width: 8px;
+  height: 8px;
+  background: #10b981;
+  border-radius: 50%;
+  margin-top: 8px;
+  flex-shrink: 0;
+}
+
+.activityContent {
+  flex: 1;
+}
+
+.activityText {
+  font-size: 14px;
+  color: #000;
+  font-weight: 500;
+  margin: 0 0 4px 0;
+}
+
+.activityTime {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+.quickActionsGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+@media (min-width: 480px) {
+  .quickActionsGrid {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  }
+}
+
+.quickActionButton {
+  padding: 16px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  text-align: left;
+  cursor: pointer;
+}
+
+.quickActionButton:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.quickActionTitle {
+  font-size: 14px;
+  font-weight: 500;
+  color: #000;
+  margin: 0 0 4px 0;
+}
+
+.quickActionSubtitle {
+  font-size: 12px;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* Loading skeleton styles */
+.loading {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.statIconSkeleton {
+  width: 48px;
+  height: 48px;
+  background: #e5e7eb;
+  border-radius: 8px;
+}
+
+.statChangeSkeleton {
+  width: 40px;
+  height: 16px;
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.statValueSkeleton {
+  width: 80px;
+  height: 32px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  margin: 16px 0 4px 0;
+}
+
+.statLabelSkeleton {
+  width: 120px;
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.activityTextSkeleton {
+  width: 200px;
+  height: 14px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  margin-bottom: 4px;
+}
+
+.activityTimeSkeleton {
+  width: 80px;
+  height: 12px;
+  background: #e5e7eb;
+  border-radius: 4px;
+}
+
+.noActivities {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+}
+
+.noActivities p {
+  margin: 0;
+  font-size: 14px;
+}
+
+.noStats {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b7280;
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+}
+
+.noStats p {
+  margin: 0;
+  font-size: 16px;
+}

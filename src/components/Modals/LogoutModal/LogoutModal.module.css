@@ -1,0 +1,98 @@
+/* Modal Styles */
+.modalBackdrop {
+  position: fixed;
+  inset: 0;
+  backdrop-filter: blur(4px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 24px;
+}
+
+.modal {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 16px;
+  max-width: 448px;
+  width: 100%;
+  padding: 24px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.modalHeaderContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modalIconWrapper {
+  padding: 12px;
+  background: #fef2f2;
+  border-radius: 8px;
+}
+
+.modalIcon {
+  width: 24px;
+  height: 24px;
+  color: #dc2626;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+}
+
+.modalCloseButton {
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
+
+.modalCloseButton:hover {
+  background: #f3f4f6;
+}
+
+.modalCloseIcon {
+  width: 20px;
+  height: 20px;
+  color: #6b7280;
+}
+
+.modalMessage {
+  color: #6b7280;
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+.modalActions {
+  display: flex;
+  gap: 12px;
+}
+
+.modalLogoutButton {
+  flex: 1;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 500;
+  transition: background 0.2s ease;
+  background: #dc2626;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.modalLogoutButton:hover {
+  background: #b91c1c;
+}
