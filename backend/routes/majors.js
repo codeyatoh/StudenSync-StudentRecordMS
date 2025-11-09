@@ -132,22 +132,11 @@ router.post('/', async (req, res) => {
       is_active = true
     } = req.body;
 
-    // Validate required fields
-    if (!major_name || !major_code) {
+    // Validate required fields - major_name is always required
+    if (!major_name) {
       return res.status(400).json({
         success: false,
-        message: 'Major name and code are required'
-      });
-    }
-
-    // Check if major code already exists
-    const checkQuery = 'SELECT major_id FROM majors WHERE major_code = ?';
-    const checkResult = await executeQuery(checkQuery, [major_code]);
-
-    if (checkResult.success && checkResult.data.length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Major code already exists'
+        message: 'Major name is required'
       });
     }
 
@@ -164,11 +153,32 @@ router.post('/', async (req, res) => {
     const hasIsActive = columnNames.includes('is_active');
     const hasCreatedBy = columnNames.includes('created_by');
 
+    // Validate major_code only if the column exists
+    if (hasMajorCode) {
+      if (!major_code) {
+        return res.status(400).json({
+          success: false,
+          message: 'Major name and code are required'
+        });
+      }
+
+      // Check if major code already exists
+      const checkQuery = 'SELECT major_id FROM majors WHERE major_code = ?';
+      const checkResult = await executeQuery(checkQuery, [major_code]);
+
+      if (checkResult.success && checkResult.data.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'Major code already exists'
+        });
+      }
+    }
+
     const fields = ['major_name'];
     const values = [major_name];
     const placeholders = ['?'];
 
-    if (hasMajorCode) { fields.push('major_code'); values.push(major_code); placeholders.push('?'); }
+    if (hasMajorCode && major_code) { fields.push('major_code'); values.push(major_code); placeholders.push('?'); }
     if (columnNames.includes('program_id')) { fields.push('program_id'); values.push(program_id || null); placeholders.push('?'); }
     if (hasDescription) { fields.push('description'); values.push(description || null); placeholders.push('?'); }
     if (hasIsActive) { fields.push('is_active'); values.push(is_active); placeholders.push('?'); }

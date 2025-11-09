@@ -73,6 +73,7 @@ function Majors() {
 
   const filteredMajors = majors.filter(major =>
     major.major_name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    major.major_code?.toLowerCase().includes(searchQuery.toLowerCase()) ||
     major.program_name?.toLowerCase().includes(searchQuery.toLowerCase())
   )
 
@@ -143,6 +144,9 @@ function Majors() {
                     <td className={styles.tableCell}>
                       <div className={styles.majorName}>
                         {major.major_name}
+                        {major.major_code && (
+                          <span className={styles.majorCode}> ({major.major_code})</span>
+                        )}
                       </div>
                     </td>
                     <td className={styles.tableCell}>

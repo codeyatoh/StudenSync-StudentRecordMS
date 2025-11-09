@@ -8,10 +8,12 @@ import {
   Trash2Icon,
   UserIcon,
   ArchiveIcon,
+  FilterIcon,
+  XIcon,
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button, AddStudentModal, EditStudentModal, StudentModal, DeleteModal } from '../../components'
-import { studentsAPI } from '../../services/api'
+import { studentsAPI, programsAPI, majorsAPI } from '../../services/api'
 import styles from './Students.module.css'
 
 function Students() {
@@ -25,27 +27,81 @@ function Students() {
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [selectedStudent, setSelectedStudent] = useState(null)
   const [searchQuery, setSearchQuery] = useState('')
+  const [showFilters, setShowFilters] = useState(false)
+  const [filters, setFilters] = useState({
+    programId: '',
+    majorId: '',
+    yearLevel: '',
+    enrollmentStatus: ''
+  })
+  const [programs, setPrograms] = useState([])
+  const [majors, setMajors] = useState([])
+  const [totalCount, setTotalCount] = useState(0)
 
+  // Fetch programs and majors for filters
+  useEffect(() => {
+    const fetchFilterData = async () => {
+      try {
+        const [programsResponse, majorsResponse] = await Promise.all([
+          programsAPI.getAll(),
+          majorsAPI.getAll()
+        ])
+        setPrograms(programsResponse?.data || [])
+        setMajors(majorsResponse?.data || [])
+      } catch (error) {
+        console.error('Failed to fetch filter data:', error)
+      }
+    }
+    fetchFilterData()
+  }, [])
+
+  // Fetch students with filters
   useEffect(() => {
     const fetchStudents = async () => {
       try {
         setLoading(true)
         setError(null)
-        const response = await studentsAPI.getAll()
+        
+        // Build query parameters
+        const params = {}
+        if (searchQuery.trim()) {
+          params.search = searchQuery.trim()
+        }
+        if (filters.programId) {
+          params.program_id = parseInt(filters.programId)
+        }
+        if (filters.majorId) {
+          params.major_id = parseInt(filters.majorId)
+        }
+        if (filters.yearLevel) {
+          params.year_level = parseInt(filters.yearLevel)
+        }
+        if (filters.enrollmentStatus) {
+          params.enrollment_status = filters.enrollmentStatus
+        }
+        // Increase limit to get more results
+        params.limit = 1000
+
+        const response = await studentsAPI.getAll(params)
 
         let studentsList = []
         if (response?.data?.students) {
           studentsList = response.data.students
+          setTotalCount(response.data.pagination?.total || studentsList.length)
         } else if (Array.isArray(response?.data)) {
           studentsList = response.data
+          setTotalCount(studentsList.length)
         } else if (Array.isArray(response)) {
           studentsList = response
+          setTotalCount(studentsList.length)
         } else if (Array.isArray(response?.students)) {
           studentsList = response.students
+          setTotalCount(studentsList.length)
         } else {
           if (process.env.NODE_ENV === 'development') {
             console.warn('Unexpected students response structure:', response)
           }
+          setTotalCount(0)
         }
 
         setStudents(Array.isArray(studentsList) ? studentsList : [])
@@ -54,6 +110,7 @@ function Students() {
         console.error('Error details:', error)
         setError(error.message || 'Failed to load students')
         setStudents([])
+        setTotalCount(0)
         toast.error('Failed to load students')
       } finally {
         setLoading(false)
@@ -61,21 +118,43 @@ function Students() {
     }
 
     fetchStudents()
-  }, [])
+  }, [searchQuery, filters])
 
   const refreshStudents = async () => {
     try {
-      const response = await studentsAPI.getAll()
+      const params = {}
+      if (searchQuery.trim()) {
+        params.search = searchQuery.trim()
+      }
+      if (filters.programId) {
+        params.program_id = parseInt(filters.programId)
+      }
+      if (filters.majorId) {
+        params.major_id = parseInt(filters.majorId)
+      }
+      if (filters.yearLevel) {
+        params.year_level = parseInt(filters.yearLevel)
+      }
+      if (filters.enrollmentStatus) {
+        params.enrollment_status = filters.enrollmentStatus
+      }
+      params.limit = 1000
+
+      const response = await studentsAPI.getAll(params)
 
       let studentsList = []
       if (response?.data?.students) {
         studentsList = response.data.students
+        setTotalCount(response.data.pagination?.total || studentsList.length)
       } else if (Array.isArray(response?.data)) {
         studentsList = response.data
+        setTotalCount(studentsList.length)
       } else if (Array.isArray(response)) {
         studentsList = response
+        setTotalCount(studentsList.length)
       } else if (Array.isArray(response?.students)) {
         studentsList = response.students
+        setTotalCount(studentsList.length)
       }
 
       setStudents(Array.isArray(studentsList) ? studentsList : [])
@@ -124,25 +203,35 @@ function Students() {
     }
   }
 
-  const filteredStudents = useMemo(() => {
-    const studentsArray = Array.isArray(students) ? students : []
+  // Filter change handlers
+  const handleFilterChange = (filterName, value) => {
+    setFilters(prev => ({
+      ...prev,
+      [filterName]: value
+    }))
+  }
 
-    if (!searchQuery.trim()) {
-      return studentsArray
-    }
-    
-    const searchTerm = searchQuery.toLowerCase()
-    const filtered = studentsArray.filter((student) => {
-      const nameMatch = student.first_name && student.last_name && 
-        `${student.first_name} ${student.last_name}`.toLowerCase().includes(searchTerm)
-      const idMatch = student.student_number?.toLowerCase().includes(searchTerm)
-      const programMatch = student.program_name?.toLowerCase().includes(searchTerm)
-      
-      return nameMatch || idMatch || programMatch
+  const clearFilters = () => {
+    setFilters({
+      programId: '',
+      majorId: '',
+      yearLevel: '',
+      enrollmentStatus: ''
     })
-    
-    return filtered
-  }, [students, searchQuery])
+    setSearchQuery('')
+  }
+
+  const hasActiveFilters = () => {
+    return filters.programId || filters.majorId || filters.yearLevel || filters.enrollmentStatus || searchQuery.trim()
+  }
+
+  // Get majors filtered by selected program
+  const filteredMajors = useMemo(() => {
+    if (!filters.programId) {
+      return majors
+    }
+    return majors.filter(major => major.program_id === parseInt(filters.programId))
+  }, [majors, filters.programId])
 
   return (
     <div className={styles.container}>
@@ -173,15 +262,117 @@ function Students() {
       
       <div className={styles.card}>
         <div className={styles.searchContainer}>
-          <SearchIcon className={styles.searchIcon} />
-          <input
-            type="text"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search students by name, ID, or program..."
-            className={styles.searchInput}
-          />
+          <div className={styles.searchInputWrapper}>
+            <SearchIcon className={styles.searchIcon} />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search students by name, ID, or program..."
+              className={styles.searchInput}
+            />
+          </div>
+          <button
+            onClick={() => setShowFilters(!showFilters)}
+            className={`${styles.filterButton} ${showFilters ? styles.filterButtonActive : ''} ${hasActiveFilters() ? styles.filterButtonHasFilters : ''}`}
+            title="Toggle filters"
+          >
+            <FilterIcon className={styles.filterIcon} />
+            Filters
+            {hasActiveFilters() && <span className={styles.filterBadge}></span>}
+          </button>
         </div>
+
+        {showFilters && (
+          <div className={styles.filtersPanel}>
+            <div className={styles.filtersHeader}>
+              <h3 className={styles.filtersTitle}>Filter Students</h3>
+              {hasActiveFilters() && (
+                <button onClick={clearFilters} className={styles.clearFiltersButton}>
+                  <XIcon className={styles.clearIcon} />
+                  Clear All
+                </button>
+              )}
+            </div>
+            <div className={styles.filtersGrid}>
+              <div className={styles.filterGroup}>
+                <label className={styles.filterLabel}>Program</label>
+                <select
+                  value={filters.programId}
+                  onChange={(e) => {
+                    handleFilterChange('programId', e.target.value)
+                    // Clear major when program changes
+                    handleFilterChange('majorId', '')
+                  }}
+                  className={styles.filterSelect}
+                >
+                  <option value="">All Programs</option>
+                  {programs.map((program) => (
+                    <option key={program.program_id} value={program.program_id}>
+                      {program.program_name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <label className={styles.filterLabel}>Major</label>
+                <select
+                  value={filters.majorId}
+                  onChange={(e) => handleFilterChange('majorId', e.target.value)}
+                  className={styles.filterSelect}
+                >
+                  <option value="">All Majors</option>
+                  {filteredMajors.map((major) => (
+                    <option key={major.major_id} value={major.major_id}>
+                      {major.major_name}
+                    </option>
+                  ))}
+                </select>
+                {filters.programId && filteredMajors.length === 0 && (
+                  <span className={styles.filterHint}>No majors available for this program</span>
+                )}
+              </div>
+
+              <div className={styles.filterGroup}>
+                <label className={styles.filterLabel}>Year Level</label>
+                <select
+                  value={filters.yearLevel}
+                  onChange={(e) => handleFilterChange('yearLevel', e.target.value)}
+                  className={styles.filterSelect}
+                >
+                  <option value="">All Year Levels</option>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3">3rd Year</option>
+                  <option value="4">4th Year</option>
+                  <option value="5">5th Year</option>
+                </select>
+              </div>
+
+              <div className={styles.filterGroup}>
+                <label className={styles.filterLabel}>Enrollment Status</label>
+                <select
+                  value={filters.enrollmentStatus}
+                  onChange={(e) => handleFilterChange('enrollmentStatus', e.target.value)}
+                  className={styles.filterSelect}
+                >
+                  <option value="">All Statuses</option>
+                  <option value="Enrolled">Enrolled</option>
+                  <option value="Not Enrolled">Not Enrolled</option>
+                  <option value="Graduated">Graduated</option>
+                  <option value="Dropped">Dropped</option>
+                  <option value="Transferred">Transferred</option>
+                </select>
+              </div>
+            </div>
+            {hasActiveFilters() && (
+              <div className={styles.activeFiltersInfo}>
+                Showing {students.length} of {totalCount} students
+              </div>
+            )}
+          </div>
+        )}
         
         <div className={styles.tableContainer}>
           {loading ? (
@@ -208,7 +399,7 @@ function Students() {
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredStudents.map((student) => (
+                  {students.map((student) => (
                     <tr key={student.student_id} className={styles.tableRow}>
                       <td className={styles.tableCell}>
                         <div className={styles.photoCell}>
@@ -284,19 +475,13 @@ function Students() {
                   ))}
                 </tbody>
               </table>
-              {filteredStudents.length === 0 && !loading && (
+              {students.length === 0 && !loading && (
                 <div className={styles.emptyState}>
                   <p className={styles.emptyStateText}>
-                    {students.length === 0 
-                      ? 'No students found. Total students in state: 0' 
-                      : `No students match your search. Total students: ${students.length}`}
+                    {hasActiveFilters() 
+                      ? `No students match your filters. Try adjusting your search or filter criteria.` 
+                      : 'No students found. Add your first student to get started.'}
                   </p>
-                  {process.env.NODE_ENV === 'development' && (
-                    <p style={{ fontSize: '0.8rem', color: '#666', marginTop: '0.5rem' }}>
-                      Debug: Students state has {students.length} items. 
-                      Filtered students: {filteredStudents.length} items.
-                    </p>
-                  )}
                 </div>
               )}
             </>

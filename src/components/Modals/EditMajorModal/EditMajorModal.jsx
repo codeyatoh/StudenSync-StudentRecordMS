@@ -10,12 +10,23 @@ function EditMajorModal({ major, onClose, onSuccess }) {
   const [programs, setPrograms] = useState([])
   const [formData, setFormData] = useState({
     majorName: major?.major_name || '',
+    majorCode: major?.major_code || '',
     programId: major?.program_id || ''
   })
 
   useEffect(() => {
     fetchPrograms()
   }, [])
+
+  useEffect(() => {
+    if (major) {
+      setFormData({
+        majorName: major.major_name || '',
+        majorCode: major.major_code || '',
+        programId: major.program_id || ''
+      })
+    }
+  }, [major])
 
   const fetchPrograms = async () => {
     try {
@@ -39,6 +50,7 @@ function EditMajorModal({ major, onClose, onSuccess }) {
       
       const majorData = {
         major_name: formData.majorName.trim(),
+        major_code: formData.majorCode.trim() || null,
         program_id: formData.programId || null
       }
 
@@ -87,6 +99,16 @@ function EditMajorModal({ major, onClose, onSuccess }) {
                     className={styles.input}
                     placeholder="e.g., Software Engineering"
                     required
+                  />
+                </div>
+                <div>
+                  <label className={styles.label}>Major Code</label>
+                  <input
+                    type="text"
+                    value={formData.majorCode}
+                    onChange={(e) => setFormData({ ...formData, majorCode: e.target.value })}
+                    className={styles.input}
+                    placeholder="e.g., CS, IT, SE"
                   />
                 </div>
               </div>

@@ -15,7 +15,7 @@ const toPositiveInt = (value, fallback) => {
   return Number.isFinite(parsed) && parsed > 0 ? parsed : fallback;
 };
 
-const buildFilters = ({ search, programId, yearLevel, enrollmentStatus, activeOnly }) => {
+const buildFilters = ({ search, programId, majorId, yearLevel, enrollmentStatus, activeOnly }) => {
   const filters = [];
   const params = [];
 
@@ -41,6 +41,11 @@ const buildFilters = ({ search, programId, yearLevel, enrollmentStatus, activeOn
   if (Number.isInteger(programId)) {
     filters.push('s.program_id = ?');
     params.push(programId);
+  }
+
+  if (Number.isInteger(majorId)) {
+    filters.push('s.major_id = ?');
+    params.push(majorId);
   }
 
   if (Number.isInteger(yearLevel)) {
@@ -187,11 +192,13 @@ router.get('/', async (req, res) => {
     const offset = (pageNum - 1) * limitNum;
 
     const programId = Number.isFinite(parseInt(req.query.program_id, 10)) ? parseInt(req.query.program_id, 10) : undefined;
+    const majorId = Number.isFinite(parseInt(req.query.major_id, 10)) ? parseInt(req.query.major_id, 10) : undefined;
     const yearLevel = Number.isFinite(parseInt(req.query.year_level, 10)) ? parseInt(req.query.year_level, 10) : undefined;
 
     const { whereClause, params } = buildFilters({
       search: req.query.search,
       programId,
+      majorId,
       yearLevel,
       enrollmentStatus: req.query.enrollment_status,
       activeOnly: true

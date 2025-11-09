@@ -37,6 +37,12 @@ function ViewMajorModal({ major, onClose }) {
                   <span className={styles.infoLabel}>Major Name:</span>
                   <span className={styles.infoValue}>{major.major_name}</span>
                 </div>
+                {major.major_code && (
+                  <div className={styles.infoItem}>
+                    <span className={styles.infoLabel}>Major Code:</span>
+                    <span className={styles.infoValue}>{major.major_code}</span>
+                  </div>
+                )}
                 <div className={styles.infoItem}>
                   <span className={styles.infoLabel}>Major ID:</span>
                   <span className={styles.infoValueMono}>{major.major_id}</span>

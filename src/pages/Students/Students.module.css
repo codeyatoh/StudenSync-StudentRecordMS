@@ -123,8 +123,23 @@
 }
 
 .searchContainer {
-  position: relative;
+  display: flex;
+  gap: 12px;
   margin-bottom: 24px;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .searchContainer {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+.searchInputWrapper {
+  position: relative;
+  flex: 1;
+  width: 100%;
 }
 
 .searchIcon {
@@ -135,6 +150,7 @@
   width: 20px;
   height: 20px;
   color: #9ca3af;
+  pointer-events: none;
 }
 
 .searchInput {
@@ -147,6 +163,7 @@
   color: #000;
   outline: none;
   transition: border-color 0.2s ease;
+  box-sizing: border-box;
 }
 
 .searchInput::placeholder {
@@ -155,6 +172,184 @@
 
 .searchInput:focus {
   border-color: #000;
+}
+
+.filterButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  min-height: 44px;
+  position: relative;
+}
+
+.filterButton:hover {
+  background: #f9fafb;
+  border-color: #d1d5db;
+}
+
+.filterButtonActive {
+  background: #000;
+  color: white;
+  border-color: #000;
+}
+
+.filterButtonActive:hover {
+  background: #1f1f1f;
+}
+
+.filterButtonHasFilters {
+  border-color: #000;
+}
+
+.filterIcon {
+  width: 16px;
+  height: 16px;
+}
+
+.filterBadge {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.filterButtonActive .filterBadge {
+  border-color: #000;
+}
+
+.filtersPanel {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+.filtersHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.filtersTitle {
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  margin: 0;
+}
+
+.clearFiltersButton {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: transparent;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 13px;
+  color: #6b7280;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clearFiltersButton:hover {
+  background: white;
+  border-color: #9ca3af;
+  color: #374151;
+}
+
+.clearIcon {
+  width: 14px;
+  height: 14px;
+}
+
+.filtersGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 640px) {
+  .filtersGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .filtersGrid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.filterGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filterLabel {
+  font-size: 13px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.filterSelect {
+  width: 100%;
+  padding: 10px 12px;
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  color: #000;
+  outline: none;
+  transition: border-color 0.2s ease;
+  cursor: pointer;
+}
+
+.filterSelect:hover {
+  border-color: #9ca3af;
+}
+
+.filterSelect:focus {
+  border-color: #000;
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+.filterSelect:disabled {
+  background: #f3f4f6;
+  color: #9ca3af;
+  cursor: not-allowed;
+}
+
+.activeFiltersInfo {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid #e5e7eb;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.filterHint {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 4px;
 }
 
 .tableContainer {

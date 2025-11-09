@@ -263,6 +263,12 @@
   color: #000;
 }
 
+.majorCode {
+  font-weight: 400;
+  color: #6b7280;
+  font-size: 0.9em;
+}
+
 .description {
   color: #6b7280;
   line-height: 1.4;
