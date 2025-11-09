@@ -20,7 +20,7 @@ const initializeDatabase = async () => {
     console.log('📡 Connected to MySQL server');
 
     // Read and execute SQL schema file
-    const sqlFilePath = path.join(__dirname, 'student-records-management-system.sql');
+    const sqlFilePath = path.join(__dirname, '..', 'sql', 'srms_schema.sql');
     const sqlContent = await fs.readFile(sqlFilePath, 'utf8');
     
     console.log('📄 Reading database schema file...');
@@ -73,7 +73,7 @@ const initializeDatabase = async () => {
     } else if (error.code === 'ECONNREFUSED') {
       console.log('💡 Please make sure MySQL server is running');
     } else if (error.code === 'ENOENT') {
-      console.log('💡 SQL schema file not found. Please ensure setup-database.sql exists');
+      console.log('💡 SQL schema file not found. Please ensure backend/sql/srms_schema.sql exists');
     }
     
     process.exit(1);
